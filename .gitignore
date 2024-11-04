@@ -1,0 +1,46 @@
+# Ignore build directories and output
+**/build/
+**/dist/
+
+# NetBeans specific files
+nbproject/private/
+**/nbproject/private/
+**/nbbuild/
+**/nbdist/
+**/nbactions.xml
+**/nb-configuration.xml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# IDE config files
+**/.idea/
+**/.vscode/
+
+# Maven or Gradle specific (if present)
+**/target/
+**/.mvn/
+**/.gradle/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Other general excludes
+*.iml
+*.out
+
