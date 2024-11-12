@@ -9,8 +9,8 @@ package tugas_5;
  * @author rss
  */
 public class Segitiga extends BangunDatar {
-        public float alas;
-        public float tinggi;
+        private float alas;
+        private float tinggi;
 	
 	public Segitiga(float alas, float tinggi) {
 		this.alas = alas;

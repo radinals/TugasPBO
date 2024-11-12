@@ -9,8 +9,8 @@ package tugas_5;
  * @author rss
  */
 public class PersegiPanjang extends BangunDatar {
-        public float panjang;
-        public float lebar;
+        private float panjang;
+        private float lebar;
         
 	public PersegiPanjang(float panjang, float lebar) {
 		this.panjang = panjang;
