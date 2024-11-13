@@ -15,15 +15,6 @@ public class Lingkaran extends BangunDatar {
 	public Lingkaran(float r) {
 		this.r = r;
 	}
-	
-        private float luas() {
-		return PI * (r*r);
-        }
-        
-        
-	private float keliling() {
-                return 2.0f * PI * r;
-        }
 
 	public float getJariJari() {
 		return r;
@@ -35,11 +26,11 @@ public class Lingkaran extends BangunDatar {
 	
 	@Override
 	public float getLuas() {
-		return luas();
+		return PI * (r*r);
 	}
 	
 	@Override
 	public float getKeliling() {
-		return keliling();
+		return 2.0f * PI * r;
 	}
 }

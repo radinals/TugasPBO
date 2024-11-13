@@ -14,16 +14,7 @@ public class Persegi extends BangunDatar {
         public Persegi(float sisi) {
                 this.sisi = sisi;
         }
-        
-        private float luas() {
-             return sisi * sisi;
-              
-        }
-        
-        private float keliling() {
-            return 4 * sisi;
-        }
-
+	
         public float getSisi() {
                 return sisi;
         }
@@ -34,12 +25,12 @@ public class Persegi extends BangunDatar {
         
 	@Override
         public float getLuas() {
-                return luas();
+               return sisi * sisi;
         }
         
 	@Override
         public float getKeliling() {
-                return keliling();
+                return 4 * sisi;
         }
         
         

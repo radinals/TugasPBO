@@ -33,21 +33,13 @@ public class PersegiPanjang extends BangunDatar {
 		return lebar;
 	}
         
-        private float luas() {
-                return panjang * lebar;
-        }
-        
-        private float keliling() {
-                return 2 * (panjang + lebar);
-        }
-	
 	@Override
 	public float getLuas() {
-		return luas();
+		return panjang * lebar;
 	}
 	
 	@Override
 	public float getKeliling() {
-		return keliling();
+		return 2 * (panjang + lebar);
 	}
 }
