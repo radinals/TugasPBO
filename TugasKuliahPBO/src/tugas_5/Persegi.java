@@ -32,10 +32,12 @@ public class Persegi extends BangunDatar {
                 this.sisi = sisi;
         }
         
+	@Override
         public float getLuas() {
                 return luas();
         }
         
+	@Override
         public float getKeliling() {
                 return keliling();
         }
