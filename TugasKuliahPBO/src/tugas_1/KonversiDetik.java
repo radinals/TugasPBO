@@ -28,5 +28,7 @@ public class KonversiDetik {
         
         System.out.println("Dalam Detik : " + konversi_detik);
 
+        input.close();
+
         }
 }

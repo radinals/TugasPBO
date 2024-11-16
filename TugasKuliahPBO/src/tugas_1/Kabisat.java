@@ -33,6 +33,8 @@ public class Kabisat {
                } else {
                       System.out.println(tahun + " bukan tahun kabisat");    
                }
+
+               input.close();
        }
        
         public static void main(String[] args) {

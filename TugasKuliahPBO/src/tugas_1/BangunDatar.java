@@ -71,6 +71,7 @@ public class BangunDatar {
                }
                 
         }
+		input.close();
       }
         public static void main(String[] args) {
                 run();

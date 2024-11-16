@@ -14,7 +14,9 @@ public class BangunDatar {
         final float inputData(String prompt) {
                 var sc = new Scanner(System.in);
                 System.out.print("Masukan panjang sisi: ");
-                return sc.nextFloat();
+                float in = sc.nextFloat();
+                sc.close();
+                return in;
         }
         
         public float hitungLuas() {
