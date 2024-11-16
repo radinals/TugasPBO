@@ -1,4 +1,4 @@
-package soal8;
+package soal7;
 
 public class ThreadPrint extends Thread {
 	private final String pesan;
