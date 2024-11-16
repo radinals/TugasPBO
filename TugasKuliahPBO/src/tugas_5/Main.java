@@ -12,7 +12,7 @@ public class Main {
 
         public static void main(String[] args) {
                 
-                BangunDatar bangun_persegi = new Persegi(5);
+		BangunDatar bangun_persegi = new Persegi(5);
 		BangunDatar bangun_persegi_panjang = new PersegiPanjang(10,5);
 		BangunDatar bangun_segitiga = new Segitiga(13, 3);
 		BangunDatar bangun_lingkaran = new Lingkaran(30);
