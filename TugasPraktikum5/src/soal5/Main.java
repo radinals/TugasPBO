@@ -21,19 +21,14 @@ public class Main {
 			if (kolom == null) continue;
 			
 			System.out.println("Input Matrix A: ");
-			
 			int[][] a = inputMatrix(baris,kolom);
-
 			printMatrix(a);
 
 			System.out.println("Input Matrix b: ");
-
 			int[][] b = inputMatrix(baris,kolom);
-			
 			printMatrix(b);
 
 			System.out.println("Hasil Pertambahan a + b: ");
-			
 			printMatrix(pertambahanMatrix(a,b));
 			
 			System.out.print("Keluar (Y/T): ");
@@ -41,7 +36,6 @@ public class Main {
 			
 			if (input.contains("Y")) break;
 		}
-
 		sc.close();
 	}
 
@@ -50,20 +44,17 @@ public class Main {
 
 		if (a.length == b.length) {
 			for(int i = 0; i < a.length; i++) {
-				for(int j = 0; j < a.length; j++) {
+				for(int j = 0; j < a.length; j++) 
 					c[i][j] = a[i][j] + b[i][j]; 
-				}
 			}
 		}
-
 		return c;
 	}
 
 	public static void printMatrix(int[][] m) {
 		for(int baris[] : m ) {
-			for(int e : baris) {
+			for(int e : baris) 
 				System.out.print(e + " ");
-			}
 			System.out.println();
 		}
 	}
