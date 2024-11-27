@@ -11,7 +11,6 @@ public class Main {
 		sc = new Scanner(System.in);
 
 		while(true) {
-			
 			Integer baris, kolom;
 
 			baris = inputAngka("Masukan Jumlah Baris: ");
