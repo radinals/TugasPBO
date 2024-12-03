@@ -1,4 +1,4 @@
-package tugas7;
+package tugas_7;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package tugas7;
+package tugas_7;
 
 public class NegativeNumberException extends Exception {
 
