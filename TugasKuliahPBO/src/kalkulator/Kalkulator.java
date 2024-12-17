@@ -17,18 +17,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class Kalkulator extends JFrame implements ActionListener {
-	
+
 	private JPanel areaPanelBawah;
 	private JPanel areaTombolAngka;
 	private JPanel areaTombolOperator;
 	private JPanel areaHasil;
-	
+
 	private JTextField outputArea, equationArea;
 	private Font fontOutput, fontTombol, fontResult;
-	
+
 	private String teksPerhitungan;
 	private String bufferAngka;
-	
+
 	private LinkedList<String> operatorStack;
 	private LinkedList<String> operandStack;
 
@@ -36,12 +36,12 @@ public class Kalkulator extends JFrame implements ActionListener {
 		setSize(400,500);
 		setLayout(new GridLayout(2,1));
 		setVisible(true);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		fontOutput = new Font("Arial", 0, 40);
 		fontResult = new Font("Arial", 0, 30);
 		fontTombol = new Font("Arial", 0, 20);
-		
+
 		outputArea = new JTextField();
 		equationArea = new JTextField();
 		outputArea.setFont(fontOutput);
@@ -56,7 +56,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 		areaPanelBawah = new JPanel();
 		areaPanelBawah.setLayout(new GridLayout(2,1));
 		areaPanelBawah.setVisible(true);
-		
+
 		add(areaHasil);
 
 		addTombolOperator();
@@ -65,20 +65,20 @@ public class Kalkulator extends JFrame implements ActionListener {
 		addTombolAngka();
 		areaPanelBawah.add(areaTombolAngka);
 
-		
+
 		add(areaPanelBawah);
 		teksPerhitungan="";
 		bufferAngka="";
 		operandStack = new LinkedList<String>();
 		operatorStack = new LinkedList<String>();
 	}
-	
+
 	private JButton buatTombol(String label) {
-			JButton tombol = new JButton(label);
-			tombol.addActionListener(this);
-			tombol.setVisible(true);
-			tombol.setFont(fontTombol);
-			return tombol;
+		JButton tombol = new JButton(label);
+		tombol.addActionListener(this);
+		tombol.setVisible(true);
+		tombol.setFont(fontTombol);
+		return tombol;
 	}
 
 	private void addTombolAngka() { 
@@ -91,9 +91,9 @@ public class Kalkulator extends JFrame implements ActionListener {
 			areaTombolAngka.add(buatTombol(String.valueOf(i)));
 		}
 
-			areaTombolAngka.add(buatTombol(String.valueOf(0)));
-			areaTombolAngka.add(buatTombol(TipeOperator.CLEAR));
-			areaTombolAngka.add(buatTombol(TipeOperator.SAMADGN));
+		areaTombolAngka.add(buatTombol(String.valueOf(0)));
+		areaTombolAngka.add(buatTombol(TipeOperator.CLEAR));
+		areaTombolAngka.add(buatTombol(TipeOperator.SAMADGN));
 	}
 
 	private void addTombolOperator() { 
@@ -101,28 +101,28 @@ public class Kalkulator extends JFrame implements ActionListener {
 		areaTombolOperator.setLayout(new GridLayout(2,TipeOperator.nilaiOperatorAritmatika.size()+3));
 		areaTombolOperator.setVisible(true);
 
-	    for (String label : TipeOperator.nilaiOperatorAritmatika.keySet()) {
+		for (String label : TipeOperator.nilaiOperatorAritmatika.keySet()) {
 			areaTombolOperator.add(buatTombol(label));
-        }
+		}
 
 		areaTombolOperator.add(buatTombol(TipeOperator.KOMA));
 		areaTombolOperator.add(buatTombol(TipeOperator.KURUNGBUKA));
 		areaTombolOperator.add(buatTombol(TipeOperator.KURUNGTUTUP));
 	}
-	
-	
+
+
 	private String getHasil(String op1, String operator, String op2 ) {
 		double nop1, nop2;
-		
+
 		try {
 			nop1 = Double.valueOf(op1);
 			nop2 = Double.valueOf(op2);
 		} catch (Exception e) {
 			return null;
 		}
-		
+
 		double hasil = 0;
-		
+
 		System.out.println(op1 + " " + operator + " " + op2);
 
 		switch(operator) {
@@ -148,7 +148,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 			hasil = nop1 * (nop2 / 100.0);
 			break;
 		}
-		
+
 		if ((hasil - (int)hasil) == 0.0) { 
 			return String.valueOf((int)hasil);
 		}else {
@@ -156,50 +156,50 @@ public class Kalkulator extends JFrame implements ActionListener {
 		}
 
 	}
-	
+
 	public String lakukanPerhitungan() {
 
-			while (operatorStack.peek() == TipeOperator.KURUNGTUTUP ||
-				   operatorStack.peek() == TipeOperator.KURUNGBUKA )
-			{
-					operatorStack.poll();
-			}
+		while (operatorStack.peek() == TipeOperator.KURUNGTUTUP ||
+				operatorStack.peek() == TipeOperator.KURUNGBUKA )
+		{
+			operatorStack.poll();
+		}
 
-			if(operatorStack.isEmpty() || operandStack.isEmpty())
-				return null;
+		if(operatorStack.isEmpty() || operandStack.isEmpty())
+			return null;
 
-			String operand2 = operandStack.poll();
-			String operand1 = operandStack.poll();
-			String operator = operatorStack.poll();
-			return getHasil(operand1, operator, operand2);
+		String operand2 = operandStack.poll();
+		String operand1 = operandStack.poll();
+		String operator = operatorStack.poll();
+		return getHasil(operand1, operator, operand2);
 	}
-	
+
 	private void tambahOperandDariBuffer() {
-			if (!bufferAngka.isEmpty()) {
-				operandStack.push(bufferAngka);
-				bufferAngka = "";
-			}
-	}
-	
-	private void resetPerhitungan() {
-			teksPerhitungan = "";
+		if (!bufferAngka.isEmpty()) {
+			operandStack.push(bufferAngka);
 			bufferAngka = "";
-			operatorStack.clear();
-			operandStack.clear();
-			outputArea.setText("");
-			equationArea.setText("");
+		}
 	}
-	
+
+	private void resetPerhitungan() {
+		teksPerhitungan = "";
+		bufferAngka = "";
+		operatorStack.clear();
+		operandStack.clear();
+		outputArea.setText("");
+		equationArea.setText("");
+	}
+
 	private void prosesOperator(String operator) {
 		if( !operatorStack.isEmpty() && operandStack.size() > 1 && operator != TipeOperator.KURUNGBUKA &&
-			TipeOperator.nilaiOperatorAritmatika.getOrDefault(operator, 0) <= TipeOperator.nilaiOperatorAritmatika.getOrDefault(operatorStack.peek(),0) )
+				TipeOperator.nilaiOperatorAritmatika.getOrDefault(operator, 0) <= TipeOperator.nilaiOperatorAritmatika.getOrDefault(operatorStack.peek(),0) )
 		{
 			operandStack.push(lakukanPerhitungan());
 		}
 
 		operatorStack.push(operator);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton tombol = (JButton) e.getSource();
@@ -212,7 +212,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 			resetPerhitungan();
 			break;
 
-		// Jika tombol "=" Ditekan
+			// Jika tombol "=" Ditekan
 		case TipeOperator.SAMADGN:
 			tambahOperandDariBuffer();
 
@@ -223,7 +223,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 			outputArea.setText( String.format("%s %s", label, operandStack.peek()));
 			break;
 
-		// Jika tombol Operator Ditekan
+			// Jika tombol Operator Ditekan
 		case TipeOperator.KURANG:
 		case TipeOperator.TAMBAH:
 			if(bufferAngka.isEmpty() && operatorStack.peek() != TipeOperator.KURUNGTUTUP) {
@@ -232,7 +232,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 				break;
 			}
 			// TODO: support negative/positive numbers
-			
+
 		case TipeOperator.BAGI:        case TipeOperator.MODULUS:
 		case TipeOperator.KALI:        case TipeOperator.PERSEN:
 		case TipeOperator.PANGKAT:
@@ -243,7 +243,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 			teksPerhitungan += String.format(" %s ", label);
 			break;
 
-		// Jika tombol "." Ditekan
+			// Jika tombol "." Ditekan
 		case TipeOperator.KOMA:
 			if(bufferAngka.isEmpty() || !Character.isDigit(bufferAngka.charAt(0))) {
 				bufferAngka += 0;
@@ -252,13 +252,13 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 			// FALLTHROUGH
 
-		// Jika tombol selain operator (angka) ditekan
+			// Jika tombol selain operator (angka) ditekan
 		default: 
 			bufferAngka += label;
 			teksPerhitungan += label;
 
 		}
-		
+
 		System.out.println("OP: " +  operandStack);
 		System.out.println("OR: " +  operatorStack);
 
