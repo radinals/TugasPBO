@@ -66,6 +66,9 @@ public class Kalkulator extends JFrame implements ActionListener {
 		bufferAngka="";
 		operandStack = new LinkedList<String>();
 		operatorStack = new LinkedList<String>();
+		
+		revalidate();
+		repaint();
 	}
 
 	private JButton buatTombol(String label) {
