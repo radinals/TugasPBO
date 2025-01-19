@@ -14,9 +14,8 @@ import javax.swing.JTextField;
 public class Kalkulator extends JFrame implements ActionListener {
 
 	// setup area-area ui
-	private JPanel areaPanelBawah, areaTombolAngka,
-				   areaTombolOperator, areaOutput,
-				   areaHasilHitung, areaSpasi;
+	private JPanel areaPanelBawah, areaTombolAngka, areaTombolOperator,
+				   areaOutput, areaHasilHitung;
 
 	// setup widget output
 	private JTextField outputHasil, outputRumus;
@@ -33,12 +32,14 @@ public class Kalkulator extends JFrame implements ActionListener {
 	private boolean hasilDitampilkan;
 
 	public Kalkulator() {
-		// inisialisasi member
+		// inisialisasi awal state
 		bufferRumus = bufferAngka = "";
 		modBufferAngka = null;
+		hasilDitampilkan = false;
+
+		// stacks-stack untuk operasi
 		operandStack = new LinkedList<String>();
 		operatorStack = new LinkedList<String>(); 
-		hasilDitampilkan = false;
 
 		// inisialisasi elemen ui
 		setupUI();
@@ -46,16 +47,26 @@ public class Kalkulator extends JFrame implements ActionListener {
 	
 	private void setupUI() {
 		// setup frame utama
+
+		// beri title window
+		setTitle("Kalkulator");
+
+		// bounding di pinggir frame
 		setBounds(100, 100, 500, 600);
+
+		// gunakan layout grid
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		setLayout(new GridLayout(2,1));
+
+		// pastikan dapt dilihat
 		setVisible(true);
+		// on exit
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// setup widget-widget
-		setupFont();
-		setupAreaOutput();
-		setupAreaTombol();
+		setupFont(); // buatkan font-font
+		setupAreaOutput(); // siapkan area output/hasil
+		setupAreaTombol(); // siapkan tombol-tombol
 
 		// pastikan ui sudah memiliki ukuran yang tepat
 		revalidate();
@@ -71,21 +82,24 @@ public class Kalkulator extends JFrame implements ActionListener {
 	
 	
 	private void setupAreaOutput() {
-		// widget output perhitungan
+		// buatkan widget textfield output perhitungan
 		outputHasil = new JTextField();
 		outputRumus = new JTextField();
+
+		// set font texfield
 		outputHasil.setFont(fontOutput);
 		outputRumus.setFont(fontRumus);
+		
+		// buat textfield tidak dapt diedit
 		outputHasil.setEditable(false);
 		outputRumus.setEditable(false);
-
-		// untuk memberi spasi di area rumus
-		areaSpasi = new JPanel();
 
 		// siapkan area hasil
 		areaHasilHitung = new JPanel();
 		areaHasilHitung.setLayout(new GridLayout(1,2));
-		areaHasilHitung.add(areaSpasi);
+		// spasi diawal panel
+		areaHasilHitung.add(new JPanel());
+		// tambahkan texfield untuk hasil perhitungan
 		areaHasilHitung.add(outputHasil);
 
 		// siapkan area output
@@ -95,6 +109,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 		// tambahkan ke area output
 		areaOutput.add(areaHasilHitung);
+		// tambahkan texfield untuk rumus perhitungan
 		areaOutput.add(outputRumus);
 
 		getContentPane().add(areaOutput);
@@ -103,26 +118,33 @@ public class Kalkulator extends JFrame implements ActionListener {
 	private void setupAreaTombol() {
 		// siapkan area panel bawah
 		areaPanelBawah = new JPanel();
+		// gunakan layout grid
 		areaPanelBawah.setLayout(new GridLayout(2,1));
+		//pastikan dapt dilihat
 		areaPanelBawah.setVisible(true);
 
 		// siapkan area angka
 		areaTombolAngka = new JPanel();
+		// gunakan layout grid
 		areaTombolAngka.setLayout(new GridLayout(4,3, 5, 5));
+		// pastikan dapat dilihat
 		areaTombolAngka.setVisible(true);
 
 		// siapkan area operator
 		areaTombolOperator = new JPanel();
+		// gunakan layout grid
 		areaTombolOperator.setLayout(new GridLayout(
 				2, Simbol.operatorAritmatika.size()+3 // 3 untuk tombol tambahan
 		));
+		
+		// pastikan area tombol dapat dilihat
 		areaTombolOperator.setVisible(true);
 
 		// panggil method pembuat tombol
 		addTombolOperator();
 		addTombolAngka();
 
-		// tambahkan ke area panel bawah
+		// tambahkan ke area panel bawah panel tombol-tombol
 		areaPanelBawah.add(areaTombolOperator);
 		areaPanelBawah.add(areaTombolAngka);
 
@@ -132,30 +154,42 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 	// buatkan JButton
 	private JButton buatTombol(String label) {
+		// buat tombol baru
 		JButton tombol = new JButton(label);
+		// pastikan tombol dapat dilihat
 		tombol.setVisible(true);
+		// set font untuk tombol
 		tombol.setFont(fontTombol);
-		// semua tombol memiliki callback yang sama
+		// semua tombol memiliki handler yang sama
 		tombol.addActionListener(this);
+		// kembalikan tombol tersebut
 		return tombol;
 	}
 
 	private void addTombolAngka() { 
-		// tambahkan tombol-tombol ke area tombol angka
+		// tambahkan tombol-tombol angka [0-9] ke area tombol angka
 		for(int i = 0; i <= 9; i++) {
 			areaTombolAngka.add(buatTombol(String.valueOf(i)));
 		}
+		// tambahkan tombol clear
 		areaTombolAngka.add(buatTombol(Simbol.CLEAR));
+		// tambahkan tombol koma
 		areaTombolAngka.add(buatTombol(Simbol.KOMA));
 	}
 
 	// buatkan tombol-tombol operator
 	private void addTombolOperator() { 
 		// tambahkan tombol-tombol ke area tombol operator
+		
+		// tambahkan tombol "="
 		areaTombolOperator.add(buatTombol(Simbol.SAMADGN));
+
+		// loop ke semua operator aritmatika dan tambahkan
 		for (String label : Simbol.operatorAritmatika.keySet()) {
 			areaTombolOperator.add(buatTombol(label));
 		}
+
+		// tambahkan tombol-tombol kurung
 		areaTombolOperator.add(buatTombol(Simbol.KURUNGBUKA));
 		areaTombolOperator.add(buatTombol(Simbol.KURUNGTUTUP));
 	}
@@ -168,6 +202,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 		try {
 			nop1 = Float.valueOf(op1);
 			nop2 = Float.valueOf(op2);
+		// kembalikan null jika terjadi error apapun
 		} catch (Exception e) {
 			return null;
 		}
@@ -212,7 +247,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 	}
 
-	public String lakukanPerhitungan() {
+	private String lakukanPerhitungan() {
 
 		// loop untuk tiap operator yang adalah "(" atau ")" di
 		// teratas stack dan pop data tersebut agar hilang
@@ -238,6 +273,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 	// menambahkan angka yang ada di buffer ke stack
 	private void tambahOperandDariBuffer() {
+		// jika buffer kosong berhenti
 		if (bufferAngka.isEmpty())
 			return;
 		
@@ -247,11 +283,14 @@ public class Kalkulator extends JFrame implements ActionListener {
 			modBufferAngka = null;
 		};
 
+		// tambahkan nilai dari buffer
 		operandStack.push(bufferAngka);
+
+		// kosongkan buffer
 		bufferAngka = "";
 	}
 
-	// bersihkan semua data
+	// bersihkan/reset semua data
 	private void resetPerhitungan() {
 		bufferRumus = "";
 		bufferAngka = "";
@@ -294,6 +333,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 			// tambahkan angka yang diinput ke stack operand
 			tambahOperandDariBuffer();
+
 			// lakukan perhitungan untuk semua yang ada di stack
 			while(!operatorStack.isEmpty() && operandStack.size() > 1) {
 				operandStack.push(lakukanPerhitungan());
@@ -301,6 +341,8 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 			// tampilkan hasil perhitungan
 			outputHasil.setText( String.format("%s %s", label, operandStack.peek()));
+
+			// agar tidak bisa ditekan dua kali
 			hasilDitampilkan = true;
 			break;
 
@@ -316,7 +358,9 @@ public class Kalkulator extends JFrame implements ActionListener {
 		case Simbol.BAGI:        case Simbol.MODULUS:
 		case Simbol.KALI:        case Simbol.PERSEN:
 		case Simbol.PANGKAT:
+			// pastikan ada angka yang telah diinput
 			if (bufferAngka.isEmpty() && operandStack.isEmpty()) break;
+			// agar bisa menekan tombol "=" lagi
 			if (hasilDitampilkan) hasilDitampilkan = false;
 		case Simbol.KURUNGBUKA:
 		case Simbol.KURUNGTUTUP:
@@ -330,7 +374,7 @@ public class Kalkulator extends JFrame implements ActionListener {
 
 		// Jika tombol "." Ditekan
 		case Simbol.KOMA:
-			
+			// tampilkan "0." jika belum ada angka diinput
 			if(!hasilDitampilkan && (bufferAngka.isEmpty() || !Character.isDigit(bufferAngka.charAt(0)))) {
 				bufferAngka += 0;
 				bufferRumus += 0;
