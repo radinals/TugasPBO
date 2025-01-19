@@ -43,5 +43,6 @@ Thumbs.db
 # Other general excludes
 *.iml
 *.out
+dbeaver-workspace.properties
 
 /.metadata/
